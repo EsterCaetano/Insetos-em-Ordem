@@ -14,7 +14,7 @@ O projeto tem como dependências as bibliotecas Room 1.0.0 e PhotoView 2.1.3.
 
 Como Compilar
 -------------
-- `git clone https://github.com/NarcisoUNK/PI.git`
+- `git clone https://github.com/EsterCaetano/Insetos-em-Ordem.git`
 - Abrir o projeto com o Android Studio
 - Ao compilar o projeto, as dependências necessárias serão descarregadas pelo gradle
 
