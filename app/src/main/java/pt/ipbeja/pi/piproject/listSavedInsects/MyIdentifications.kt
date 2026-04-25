@@ -1,5 +1,6 @@
 package pt.ipbeja.pi.piproject.listSavedInsects
 
+import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Color
@@ -18,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import java.io.File
 import java.io.FileOutputStream
@@ -325,21 +327,19 @@ class MyIdentifications : AppCompatActivity() {
                     contentValues.put(MediaStore.Downloads.IS_PENDING, 0)
                     contentResolver.update(it, contentValues, null, null)
                     Toast.makeText(this, "PDF guardado em Downloads", Toast.LENGTH_SHORT).show()
-                    // Abrir o PDF no visualizador
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.setDataAndType(it, "application/pdf")
-                    intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-                    startActivity(intent)
+                    openGeneratedPdf(it)
                 } ?: run {
                     Toast.makeText(this, "Erro ao criar arquivo", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 pdfDocument.writeTo(FileOutputStream(filePath))
                 Toast.makeText(this, "PDF guardado", Toast.LENGTH_SHORT).show()
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.setDataAndType(Uri.fromFile(filePath), "application/pdf")
-                intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-                startActivity(intent)
+                val fileUri = FileProvider.getUriForFile(
+                    this,
+                    "${packageName}.fileprovider",
+                    filePath
+                )
+                openGeneratedPdf(fileUri)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -372,5 +372,13 @@ class MyIdentifications : AppCompatActivity() {
             }
         }
         return currentY
+    }
+
+    private fun openGeneratedPdf(pdfUri: Uri) {
+        val previewIntent = Intent(this, PdfPreviewActivity::class.java).apply {
+            putExtra(PdfPreviewActivity.EXTRA_PDF_URI, pdfUri.toString())
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        startActivity(previewIntent)
     }
 }
