@@ -89,6 +89,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".listSavedInsects.MyIdentifications"
+            android:label="@string/my_insects"
             android:screenOrientation="portrait" />
         <activity
             android:name=".credits.Credits"

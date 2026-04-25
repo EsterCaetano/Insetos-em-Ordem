@@ -53,6 +53,7 @@ class MyIdentifications : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_identifications)
 
+
         loadList()
 
         findViewById<View>(R.id.button12).setOnClickListener { finish() }
@@ -103,12 +104,12 @@ class MyIdentifications : AppCompatActivity() {
                     sendEmailWithImageFromList(identification)
                     true
                 }
-                R.id.iddelete -> {
-                    deleteItem(identification)
-                    true
-                }
                 R.id.idpdf -> {
                     generatePdfForItem(identification)
+                    true
+                }
+                R.id.iddelete -> {
+                    deleteItem(identification)
                     true
                 }
                 R.id.idcancel -> true

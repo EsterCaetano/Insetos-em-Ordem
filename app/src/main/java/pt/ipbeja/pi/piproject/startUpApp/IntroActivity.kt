@@ -10,7 +10,9 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.LocaleListCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import pt.ipbeja.pi.piproject.R
@@ -31,6 +33,7 @@ class IntroActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ensureDefaultPortugueseLocale()
 
         // Make the activity full screen
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -38,12 +41,6 @@ class IntroActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-
-        // Check if it's the first time the app is started to show privacy policy
-        val prefs = getSharedPreferences("prefs", MODE_PRIVATE)
-        if (prefs.getBoolean("firstStart", true)) {
-            showStartDialog()
-        }
 
         // Check if intro has been seen before
         if (restorePrefData()) {
@@ -53,6 +50,12 @@ class IntroActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_intro)
+
+        // Check if it's the first time the app is started to show privacy policy
+        val prefs = getSharedPreferences("prefs", MODE_PRIVATE)
+        if (prefs.getBoolean("firstStart", true)) {
+            showStartDialog()
+        }
 
         // Initialize views
         btnNext = findViewById(R.id.btn_next)
@@ -133,16 +136,25 @@ class IntroActivity : AppCompatActivity() {
         }
     }
 
+    private fun ensureDefaultPortugueseLocale() {
+        // Keep user/device preference if already selected; only set a default once.
+        if (AppCompatDelegate.getApplicationLocales().isEmpty) {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("pt"))
+        }
+    }
+
     private fun showStartDialog() {
         AlertDialog.Builder(this)
             .setIcon(R.drawable.intro_2)
             .setTitle(R.string.Privacy_Policy)
             .setMessage(R.string.Privacy_Policy_INFO_MAIN)
-            .setPositiveButton(R.string.agree) { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton(R.string.agree) { dialog, _ -> 
+                dialog.dismiss()
+                getSharedPreferences("prefs", MODE_PRIVATE).edit().putBoolean("firstStart", false).apply()
+            }
+            .setCancelable(false)
             .create()
             .show()
-
-        getSharedPreferences("prefs", MODE_PRIVATE).edit().putBoolean("firstStart", false).apply()
     }
 
     private fun restorePrefData(): Boolean {
