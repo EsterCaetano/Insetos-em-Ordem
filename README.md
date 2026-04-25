@@ -34,4 +34,4 @@ Créditos
 - Conteúdos do livro Estudo e Classificação das Rochas por Exame Macroscópio, Joaquim Botelho da Costa
 - Aplicação desenvolvida em colaboração com a Dra. Patrícia Garcia Pereira e pela equipa da Plataforma de Ciência Aberta
 
-Os vídeos dos testes de utilizadores, bugs e opções da chave dicotómica podem ser encontrados no repositório do Dropbox [aqui](https://www.dropbox.com/scl/fo/05chv1ufs53m9h4fk2zpf/ALyHEoM3BH4S_bso0ko9RWk?rlkey=87tqx3nh8n1wby56us8h9rrqp&st=zivr7pmn&dl=0).
+Vídeos dos testes de usabilidade da aplicação: [Aqui](https://ipbejapt.sharepoint.com/:f:/s/ProjetoInsectoemOrdem/IgCaTSzfPrsTQJmnUDXFFMMGAYpjTfWWvyDXJieKC_HduGs?e=uJJT8w)
