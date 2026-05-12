@@ -1,10 +1,10 @@
-Insetos em Ordem + Que Rocha é Esta?
-====================================
+Insetos em Ordem
+================
 Este projeto foi desenvolvido no âmbito da Unidade Curricular de Estagio/Projeto da Licenciatura de Engenharia Informática da Escola Superior de Tecnologia e Gestão do Instituto Politécnico de Beja.
 
-Neste projeto foram implementadas duas aplicações Android com o objetivo de tornar acessível ao público geral o uso de chaves dicotómicas. As aplicações foram desenvolvidas de forma a poderem ser adaptadas a outras chaves.
+Neste projeto foi implementada uma aplicação Android com o objetivo de tornar acessível ao público geral o uso de chaves dicotómicas. A aplicação foi desenvolvida de forma a poder ser adaptada a outras chaves.
 
-As aplicações incluem conteúdos para uma chave de identificação de insetos até ao nível da respetiva ordem e uma chave de identificação de rochas.
+A aplicação inclui conteúdos para uma chave de identificação de insetos até ao nível da respetiva ordem.
 
 Requisitos
 ----------
@@ -29,9 +29,8 @@ A chave segue um formato simples em que cada nó deve estar identificado por um 
 Créditos
 --------
 - Programadores: Ester A. Caetano, Rafael Conceição Narciso, José Mauricio, Vasco Flores, José Rodrigues, alunos do Instituto Politécnico de Beja
-- Professores Tutores: João Paulo Barros, Sofia Soares
+- Professores Tutores: Isabel Sofia Brito e João Paulo Barros.
 - Conteúdos do livro Insetos em Ordem, P. Garcia Pereira, E. Monteiro, F. Vala, e C. Luís
-- Conteúdos do livro Estudo e Classificação das Rochas por Exame Macroscópio, Joaquim Botelho da Costa
 - Aplicação desenvolvida em colaboração com a Dra. Patrícia Garcia Pereira e pela equipa da Plataforma de Ciência Aberta
 
 Vídeos dos testes de usabilidade da aplicação: [Aqui](https://ipbejapt.sharepoint.com/:f:/s/ProjetoInsectoemOrdem/IgCaTSzfPrsTQJmnUDXFFMMGAYpjTfWWvyDXJieKC_HduGs?e=uJJT8w)

@@ -1,7 +1,7 @@
 # Relatório Atualizado do Projeto "Insetos em Ordem"
 
 ## Resumo do Projeto
-Este projeto desenvolveu duas aplicações Android para identificação de insetos e rochas através de chaves dicotómicas, tornando o acesso a ferramentas científicas acessíveis ao público geral. As aplicações foram implementadas em Android Studio com Kotlin, utilizando Room para persistência de dados e Google Maps para georreferenciação.
+Este projeto desenvolveu uma aplicação Android para identificação de insetos através de chaves dicotómicas, tornando o acesso a ferramentas científicas acessíveis ao público geral. A aplicação foi implementada em Android Studio com Kotlin, utilizando Room para persistência de dados e Google Maps para georreferenciação.
 
 ## Funcionalidades Principais
 - **Identificação de Insetos:** Chave dicotómica para classificação até à ordem, com imagens e descrições.

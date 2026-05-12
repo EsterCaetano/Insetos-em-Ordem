@@ -65,4 +65,5 @@ freeline_project_description.json
 .DS_Store
 /build
 /captures
-.externalNativeBuild"*.zip" 
+.externalNativeBuild"*.zip"
+
