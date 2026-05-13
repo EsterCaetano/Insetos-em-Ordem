@@ -30,5 +30,5 @@ Este projeto desenvolveu uma aplicação Android para identificação de insetos
 ## Anexos
 - Guião de Teste de Usabilidade (atualizado).
 - Instruções para ativação da Google Maps API.
-- Código fonte disponível em: https://github.com/NarcisoUNK/PI</content>
+- Código fonte disponível em: https://github.com/EsterCaetano/Insetos-em-Ordem.git</content>
 <parameter name="filePath">C:\Users\ester\Desktop\PI-master-2026-02-23-jpb\PI-master-2026-02-23-jpb\Relatorio_Atualizado.md
