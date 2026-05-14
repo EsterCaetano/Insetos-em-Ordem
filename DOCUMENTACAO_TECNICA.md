@@ -82,6 +82,11 @@ Este documento descreve a organizacao principal do codigo da aplicacao **Insetos
 - `ShowResult.kt` — Exibe resultado da identificacao (revisar se necessario).
 - `SaveIdentification.kt` — Guarda identificacao na BD (revisar se necessario).
 - `MapsActivity.kt` — Mapa de avistamentos (revisar se necessario).
+  - `onCreate()` — Inicializa mapa, verifica Google Play Services, configura botoes.
+  - `onMapReady()` — Configura mapa para modo singelo (selecao de localizacao) ou modo visualizacao.
+  - `onClickchangeView()` — Alterna entre vista de satelite e mapa normal.
+  - `onClickBack()` — Regressa a SaveIdentification.
+  - `loadAllIdentifications()` — Carrega todas as identificacoes como marcadores no mapa.
 - `ImageZoom.kt` — Preview de imagem.
 
 ### Gestao de Registos ("Os meus insetos")
