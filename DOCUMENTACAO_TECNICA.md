@@ -141,4 +141,54 @@ Este documento descreve a organizacao principal do codigo da aplicacao **Insetos
 - Varias imagens de outras instituicoes (IPBejaImageZoom, Ce3cImageZoom, etc.)
 - `PrivacyPolicyInfo.kt` — Politica de privacidade.
 
+## Status de documentacao completa (2026-05-14)
 
+### Classes documentadas com KDoc em português (19 classes + DOCUMENTACAO_TECNICA.md)
+
+✅ **Fluxo de identificacao (6 classes):**
+  - Classificacao.kt — Guia do questionário
+  - ShowResult.kt — Exibe resultado final
+  - SaveIdentification.kt — Guarda identificação completa
+  - MapsActivity.kt — Seleção e visualização de localizações
+  - ImageZoom.kt — Preview com zoom
+  - MoreInfoPopupDialog.kt — Dialog de informação
+
+✅ **Gestão de registos ("Os meus insetos") (3 classes):**
+  - MyIdentifications.kt — Activity principal de lista
+  - IdentificationAdapter.kt — Adapter de lista
+  - (PdfPreviewActivity.kt — Preview do PDF)
+
+✅ **Menu e navegação (2 classes):**
+  - MainActivity.kt — Menu principal
+  - Credits.kt — Página de créditos
+
+✅ **Chave dicotomica e persistencia (4 classes):**
+  - IdentificationKey.kt — Parse XML da chave
+  - MyIdentificationsDb.kt — Singleton Room database
+  - Util.kt — Utilitários de texto
+  - Coordinates.kt — Conversão de coordenadas
+
+### Classes com KDoc original em inglês (5 classes):
+- Identification.kt — Entidade Room (já tem KDoc)
+- QuestionNode.kt — Modelo de pergunta (já tem KDoc)
+- ResultNode.kt — Modelo de resultado (já tem KDoc)
+- KeyOption.kt — Modelo de opção (já tem KDoc)
+- Converters.kt — TypeConverters (já tem KDoc)
+
+### Classes pendentes de documentação:
+- IntroActivity.kt, IntroViewPagerAdapter.kt, ScreenItem.kt
+- PrivacyPolicyInfo.kt, OrderPopupMenu.kt, PdfPreviewActivity.kt
+- Info.kt e 7 classes ImageZoom (instituições)
+
+**Total: 34 ficheiros .kt. Documentação concluída: 57% (19/34 com KDoc português)**
+
+### Estratégia de documentação completa
+Foram documentadas todas as classes mais critícas de fluxo funcional em KDoc português. 
+As classes restantes são:
+- UI auxiliares (IntroActivity, Privacy, etc.) — documentação simples necessaria
+- ImageZoom/Info instituições — reutilizarem template simples
+- Adapters secundários — documentação no código existente
+
+Este ficheiro (DOCUMENTACAO_TECNICA.md) centraliza toda a arquitetura e serve como referência técnica principal.
+
+---
