@@ -26,6 +26,8 @@ import java.util.Locale
 
 /**
  * Activity for displaying and selecting location on a map.
+ * Permite ao utilizador selecionar localizacao no mapa para guardar com a identificacao,
+ * ou visualizar todas as identificacoes guardadas no mapa (modo leitura).
  */
 class MapsActivity : FragmentActivity(), OnMapReadyCallback {
 
@@ -40,6 +42,10 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
     private var picture2: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        /**
+         * Inicializa a Activity, verifica Google Play Services, configura mapa e botao "Guardar".
+         * Se intent contem "showAll" = true, entra em modo visualizacao de todos os registos.
+         */
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
@@ -76,6 +82,13 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        /**
+         * Callback invocado quando o mapa esta pronto.
+         * Define tipo de mapa, carrega dados do intent e configura comportamento baseado no modo:
+         * - Modo singelo: permite clique para selecionar nova localizacao (marcador amarelo).
+         * - Modo "showAll": carrega todas as identificacoes guardadas como marcadores.
+         * @param googleMap Instancia do GoogleMap pronta para uso.
+         */
         picture2 = intent.getParcelableExtra("picture")
         resultid2 = intent.getStringExtra("resultid")
         order = intent.getStringExtra("ordem")
@@ -113,6 +126,10 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
         }
     }
 
+    /**
+     * Handler para botao que alterna entre vista de satelite e mapa normal.
+     * @param view O botao clicado (nao usado diretamente, vem do XML).
+     */
     fun onClickchangeView(view: android.view.View?) {
         mMap?.let {
             if (counter % 2 == 0) {
@@ -124,10 +141,20 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
         }
     }
 
+    /**
+     * Handler para botao "Back" que regressa a SaveIdentification.
+     * @param view O botao clicado.
+     */
     fun onClickBack(view: android.view.View?) {
         startActivity(Intent(this@MapsActivity, SaveIdentification::class.java))
     }
 
+    /**
+     * Carrega todas as identificacoes guardadas da base de dados e exibe-as como marcadores no mapa.
+     * cada marcador mostra a ordem e a data da identificacao.
+     * A camera ajusta-se para incluir todos os marcadores dentro da viewport.
+     * Se nao houver identificacoes, mostra localizacao padrao (Beja, Portugal).
+     */
     private fun loadAllIdentifications() {
         // Logic to load and display all saved identifications on the map
         lifecycleScope.launch {
