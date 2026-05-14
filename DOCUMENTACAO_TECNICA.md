@@ -88,6 +88,8 @@ Este documento descreve a organizacao principal do codigo da aplicacao **Insetos
   - `onClickBack()` — Regressa a SaveIdentification.
   - `loadAllIdentifications()` — Carrega todas as identificacoes como marcadores no mapa.
 - `ImageZoom.kt` — Preview de imagem.
+- `MoreInfoPopupDialog.kt` — Dialog para mostrar mais informacao de uma opcao; metodos documentados:
+  - `onCreate()` — Carrega descricao e imagem da opcao, configura listeners para zoom.
 
 ### Gestao de Registos ("Os meus insetos")
 - `MyIdentifications.kt` — Activity principal de lista; metodos documentados:
