@@ -84,12 +84,22 @@ class IdentificationKey private constructor() {
             }
         }
 
+        /**
+         * Carrega o ficheiro XML da chave dicotomica conforme a linguagem do dispositivo (PT ou EN).
+         * @param ctx Contexto da aplicacao para acesso aos assets.
+         * @return Instancia de IdentificationKey carregada ou null se erro.
+         */
         private fun loadKey(ctx: Context): IdentificationKey? {
             val language = Locale.getDefault().language
             val fileName = if (language.startsWith("pt")) "chave.xml" else "chave-en.xml"
             return ctx.assets.open(fileName).use { loadXML(it) }
         }
 
+        /**
+         * Parse um elemento 'option' do XML e retorna um objeto KeyOption.
+         * @param e Elemento XML da opcao.
+         * @return KeyOption com texto, descricao, imagem e ID de destino.
+         */
         private fun parseOption(e: Element): KeyOption {
             val gotoId = e.getAttribute("goto")
             val text = e.getElementsByTagName("text").item(0).textContent
@@ -98,6 +108,12 @@ class IdentificationKey private constructor() {
             return KeyOption(gotoId, description, imageLocation, text)
         }
 
+        /**
+         * Parse um elemento 'node' (pergunta) do XML e retorna um QuestionNode.
+         * Cada pergunta tem um ID, texto, e duas opcoes (A e B).
+         * @param e Elemento XML da pergunta.
+         * @return QuestionNode com pergunta, opcoes e ID.
+         */
         private fun parseQuestion(e: Element): QuestionNode {
             val id = e.getAttribute("id")
             val question = e.getElementsByTagName("question").item(0).textContent
@@ -107,6 +123,11 @@ class IdentificationKey private constructor() {
             return QuestionNode(id, question, optionA, optionB)
         }
 
+        /**
+         * Parse um elemento 'result' (resultado/ordem) do XML e retorna um ResultNode.
+         * @param e Elemento XML do resultado.
+         * @return ResultNode com ID, ordem, descricao e imagem.
+         */
         private fun parseResult(e: Element): ResultNode {
             val id = e.getAttribute("id")
             val ordem = e.getElementsByTagName("ordem").item(0).textContent
@@ -115,6 +136,12 @@ class IdentificationKey private constructor() {
             return ResultNode(id, ordem, description, imageLocation)
         }
 
+        /**
+         * Carrega e parse o XML completo da chave dicotomica do InputStream.
+         * Popula a instancia IdentificationKey com todas as perguntas e resultados.
+         * @param `is` InputStream com o conteudo XML.
+         * @return IdentificationKey carregada ou null se erro durante parse.
+         */
         private fun loadXML(`is`: InputStream): IdentificationKey? {
             val key = IdentificationKey()
             try {

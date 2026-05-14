@@ -78,6 +78,12 @@ class Classificacao : AppCompatActivity() {
         }
     }
 
+    /**
+     * Navega para a proxima pergunta ou resultado baseado no ID.
+     * Se o ID corresponde a uma pergunta, abre Classificacao novamente.
+     * Se corresponde a um resultado, abre ShowResult com a ordem identificada.
+     * @param newFragmentID ID do proximo no (pergunta ou resultado) ou null.
+     */
     private fun goToNextQuestion(newFragmentID: String?) {
         try {
             val key = IdentificationKey.getInstance(applicationContext)
@@ -100,10 +106,16 @@ class Classificacao : AppCompatActivity() {
         }
     }
 
+    /**
+     * Handler para clique na opcao A (invocado do layout XML).
+     */
     fun onOptionAClick(view: View?) {
         goToNextQuestion(this.optionAEndpoint)
     }
 
+    /**
+     * Handler para clique na opcao B (invocado do layout XML).
+     */
     fun onOptionBClick(view: View?) {
         goToNextQuestion(this.optionBEndpoint)
     }
@@ -118,18 +130,29 @@ class Classificacao : AppCompatActivity() {
         }
     }
 
+    /**
+     * Abre o ecrã de zoom para a imagem da opcao A.
+     */
     fun onImageAClick(view: View?) {
         val intent = Intent(this, ImageZoom::class.java)
         intent.putExtra("optionImage", node.optionA.imageLocation)
         this.startActivity(intent)
     }
 
+    /**
+     * Abre o ecrã de zoom para a imagem da opcao B.
+     */
     fun onImageBClick(view: View?) {
         val intent = Intent(this, ImageZoom::class.java)
         intent.putExtra("optionImage", node.optionB.imageLocation)
         this.startActivity(intent)
     }
 
+    /**
+     * Carrega uma imagem dos assets e a apresenta no ImageView.
+     * @param image ImageView onde apresentar a imagem.
+     * @param imagePath Caminho relativo da imagem nos assets (ex.: "images/inseto.jpg").
+     */
     private fun setImage(image: ImageView, imagePath: String) {
         try {
             assets.open(imagePath).use { ims ->

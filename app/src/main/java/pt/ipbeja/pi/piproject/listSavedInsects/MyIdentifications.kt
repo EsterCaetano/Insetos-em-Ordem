@@ -40,6 +40,9 @@ import pt.ipbeja.pi.piproject.util.Util
  */
 class MyIdentifications : AppCompatActivity() {
 
+    /**
+     * Encapsula os valores de taxonomia usados no assunto e no corpo do email.
+     */
     private data class TaxonomyInfo(
         val fullClassification: String,
         val order: String,
@@ -67,6 +70,9 @@ class MyIdentifications : AppCompatActivity() {
         }
     }
 
+    /**
+     * Carrega todas as identificações da base de dados e atualiza a lista no ecrã.
+     */
     private fun loadList() {
         lifecycleScope.launch {
             idents = db.identificationDao().getAll().reversed()
@@ -77,6 +83,9 @@ class MyIdentifications : AppCompatActivity() {
         }
     }
 
+    /**
+     * Regista o clique em cada item e abre o menu de ações para o registo selecionado.
+     */
     private fun setListener(insectsListView: ListView) {
         insectsListView.onItemClickListener = OnItemClickListener { _, view, position, _ ->
             val item = insectsListView.getItemAtPosition(position) as Identification
@@ -121,6 +130,9 @@ class MyIdentifications : AppCompatActivity() {
         popup.show()
     }
 
+    /**
+     * Atualiza a ordem escolhida pelo utilizador e guarda a alteração na base de dados.
+     */
     private fun updateOrder(identification: Identification, selectedClassification: String) {
         lifecycleScope.launch {
             try {
@@ -149,6 +161,9 @@ class MyIdentifications : AppCompatActivity() {
         }
     }
 
+    /**
+     * Mostra o diálogo para corrigir a ordem e apresenta a lista numerada para facilitar leitura.
+     */
     private fun changeOrder(identification: Identification) {
         val classifications = try {
             IdentificationKey.getInstance(this)
@@ -167,16 +182,21 @@ class MyIdentifications : AppCompatActivity() {
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.correct_order)
-        builder.setItems(classifications.toTypedArray()) { _, which ->
+        val numberedClassifications = classifications.mapIndexed { index, value ->
+            "${index + 1}. $value"
+        }
+        builder.setItems(numberedClassifications.toTypedArray()) { _, which ->
             updateOrder(identification, classifications[which])
         }
         builder.show()
     }
 
+    /**
+     * Mostra a descrição detalhada do resultado selecionado e um atalho para mais informação.
+     */
     private fun showMoreInformation(identification: Identification) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.moreinfotext)
-        val resultId = identification.keyId
         try {
             val description = IdentificationKey.getInstance(this)?.getResult(identification.keyId)?.description ?: ""
             builder.setMessage(Util.removeSpaces(description))
@@ -193,6 +213,9 @@ class MyIdentifications : AppCompatActivity() {
         }
     }
 
+    /**
+     * Remove um registo da base de dados e recarrega a lista no ecrã.
+     */
     private fun deleteItem(identification: Identification) {
         lifecycleScope.launch {
             db.identificationDao().delete(identification)
@@ -202,6 +225,9 @@ class MyIdentifications : AppCompatActivity() {
         }
     }
 
+    /**
+     * Preenche e abre o cliente de email com os dados completos da identificação.
+     */
     private fun sendEmailWithImageFromList(item: Identification) {
         val imageURI = Uri.parse(item.photoURI)
         val latitude = item.latitude
@@ -240,6 +266,9 @@ class MyIdentifications : AppCompatActivity() {
         startActivity(Intent.createChooser(emailIntent, "Sending email..."))
     }
 
+    /**
+     * Resolve a classificação completa em componentes (ordem e subordem/grupo).
+     */
     private fun resolveTaxonomy(item: Identification): TaxonomyInfo {
         val fullClassification = try {
             IdentificationKey.getInstance(this)?.getResult(item.keyId)?.ordem?.trim().orEmpty()
@@ -256,11 +285,17 @@ class MyIdentifications : AppCompatActivity() {
         return TaxonomyInfo(fullClassification, order, suborderOrGroup)
     }
 
+    /**
+     * Extrai um valor de taxonomia com base num padrão regex, devolvendo null se não existir.
+     */
     private fun extractTaxonomyValue(classification: String, pattern: Regex): String? {
         val match = pattern.find(classification) ?: return null
         return match.groupValues.getOrNull(1)?.trim().takeUnless { it.isNullOrEmpty() }
     }
 
+    /**
+     * Gera um PDF com todos os registos da mesma ordem e abre a pré-visualização.
+     */
     private fun generatePdfForItem(identification: Identification) {
         // Filtrar identificações com a mesma ordem
         val filteredIdents = idents.filter { it.order == identification.order }
@@ -350,6 +385,9 @@ class MyIdentifications : AppCompatActivity() {
         pdfDocument.close()
     }
 
+    /**
+     * Desenha texto longo no PDF quebrando em múltiplas linhas para não ultrapassar a largura.
+     */
     private fun drawMultilineText(canvas: android.graphics.Canvas, paint: android.graphics.Paint, text: String, x: Float, startY: Float, maxWidth: Float): Float {
         var currentY = startY
         val lines = text.split("\n")
@@ -374,6 +412,9 @@ class MyIdentifications : AppCompatActivity() {
         return currentY
     }
 
+    /**
+     * Abre o PDF gerado dentro da app.
+     */
     private fun openGeneratedPdf(pdfUri: Uri) {
         val previewIntent = Intent(this, PdfPreviewActivity::class.java).apply {
             putExtra(PdfPreviewActivity.EXTRA_PDF_URI, pdfUri.toString())

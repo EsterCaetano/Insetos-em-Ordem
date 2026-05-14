@@ -17,6 +17,7 @@ import java.util.Locale
 
 /**
  * Adapter for displaying a list of identifications.
+ * Apresenta cada identificacao com a ordem, coordenadas em formato DMS, data e foto.
  * Created by vxf on 2/2/18.
  */
 class IdentificationAdapter(context: Context, objects: List<Identification?>) :
@@ -24,6 +25,14 @@ class IdentificationAdapter(context: Context, objects: List<Identification?>) :
 
     private val dateFormatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
 
+    /**
+     * Infla o layout do item da lista e popula com dados da identificacao.
+     * Carrega a foto associada usando o URI guardado no registo.
+     * @param position Posicao na lista.
+     * @param convertView View reutilizavel (null se nao houver).
+     * @param parent ViewGroup parent.
+     * @return Vista populada com dados da identificacao.
+     */
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_listing, parent, false)
         val ident = getItem(position) ?: return view
