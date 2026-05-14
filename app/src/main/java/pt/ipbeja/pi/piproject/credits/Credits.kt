@@ -9,7 +9,7 @@ import pt.ipbeja.pi.piproject.R
 
 /**
  * Credits activity
- * Displays the credits screen with buttons to navigate to other info screens.
+ * Exibe creditos e oferece atalhos para informacao sobre instituicoes e politica de privacidade.
  */
 class Credits : AppCompatActivity() {
 
@@ -25,6 +25,10 @@ class Credits : AppCompatActivity() {
     private lateinit var go9: Button
     private lateinit var go10: Button
 
+    /**
+     * Inicializa a Activity com botoes para: voltar, ver politica de privacidade,
+     * informacao geral do projeto, e logos/info de instituicoes parceiras.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_credits)
