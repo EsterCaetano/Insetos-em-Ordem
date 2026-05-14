@@ -11,11 +11,18 @@ import java.io.IOException
 
 /**
  * Activity to display a zoomed version of an image using PhotoView.
+ * Permite ao utilizador fazer zoom, pan e rotacao da imagem com gestos táteis.
  */
 class ImageZoom : AppCompatActivity() {
 
     private lateinit var go: Button
 
+    /**
+     * Inicializa a Activity: carrega a imagem dos assets (se fornecido no intent)
+     * e configura o botao para regressar a tela anterior.
+     * A imagem é manipulavel com zoom, pan e rotacao via PhotoView.
+     * @param savedInstanceState Estado anterior da Activity (se houver).
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_zoom)

@@ -16,6 +16,7 @@ import java.io.IOException
 
 /**
  * Activity to display the identification result.
+ * Apresenta a ordem identificada, descricao e imagem do resultado (final) da chave dicotomica.
  */
 class ShowResult : AppCompatActivity() {
 
@@ -25,6 +26,12 @@ class ShowResult : AppCompatActivity() {
     private lateinit var go: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        /**
+         * Inicializa a Activity: carrega o resultado baseado no intent,
+         * exibe ordem, descricao (scrollavel) e imagem do resultado.
+         * Configura botoes para guardar identificacao ou terminar.
+         * @param savedInstanceState Estado anterior da Activity (se houver).
+         */
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_result)
 
@@ -60,6 +67,10 @@ class ShowResult : AppCompatActivity() {
         }
     }
 
+    /**
+     * Handler para botao "Guardar": abre SaveIdentification passando o resultado e ordem.
+     * @param view O botao clicado.
+     */
     fun onSaveQuitClick(view: View?) {
         val intent = Intent(this, SaveIdentification::class.java)
         intent.putExtra("fragmentID", this.resultKey)
@@ -67,6 +78,10 @@ class ShowResult : AppCompatActivity() {
         startActivityForResult(intent, SAVE_IDENT)
     }
 
+    /**
+     * Handler para botao "Sair": encerra a Activity sinalizando para regressar ao menu.
+     * @param view O botao clicado.
+     */
     fun onQuitClick(view: View?) {
         val resultIntent = Intent()
         resultIntent.putExtra("finish", true)
@@ -74,6 +89,13 @@ class ShowResult : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * Callback invocado quando SaveIdentification retorna com resultado.
+     * Se sucesso, sinaliza para terminar toda a sequencia e voltar ao menu.
+     * @param requestCode Codigo do pedido.
+     * @param resultCode Codigo do resultado (OK = sucesso).
+     * @param data Intent com dados do resultado (se houver).
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SAVE_IDENT && resultCode == RESULT_OK) {

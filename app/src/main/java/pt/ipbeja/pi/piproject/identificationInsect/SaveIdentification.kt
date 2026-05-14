@@ -30,6 +30,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Activity para guardar uma identificacao na base de dados.
+ * Permite tirar foto, selecionar localizacao no mapa, e guardar toda a informacao (foto, ordem, coordenadas, data).
+ * A localizacao inicial e obtida automaticamente via GPS se permissao concedida.
+ */
 class SaveIdentification : AppCompatActivity() {
 
     private var resultId: String? = null
@@ -71,6 +76,11 @@ class SaveIdentification : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        /**
+         * Inicializa a Activity: extrai dados do resultado, verifica permissões de localizacao,
+         * configura launchers para camera e galeria, e carrega coordenadas do GPS.
+         * @param savedInstanceState Estado anterior da Activity (se houver).
+         */
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save_identification)
 
@@ -103,6 +113,10 @@ class SaveIdentification : AppCompatActivity() {
         checkNewCoordinates()
     }
 
+    /**
+     * Verifica se a permissão de localizacao foi concedida.
+     * Se sim, obtém localização imediata; se não, pede permissão.
+     */
     private fun checkLocationPermission() {
         when {
             ContextCompat.checkSelfPermission(
@@ -118,6 +132,9 @@ class SaveIdentification : AppCompatActivity() {
     }
 
     @SuppressLint("MissingPermission")
+    /**
+     * Obtém a última localização conhecida e atualiza as coordenadas no ecrã.
+     */
     private fun updateLocation() {
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             if (location != null) {
@@ -129,10 +146,19 @@ class SaveIdentification : AppCompatActivity() {
         }
     }
 
+    /**
+     * Ativa/desativa o botão "Guardar" baseado na disponibilidade de foto e localizacao.
+     * Botao so ativado se foto foi tirada/selecionada E utilizador retornou do mapa.
+     */
     private fun updateSaveButtonState() {
         myIdsButton.isEnabled = currentPhotoURI != null && hasReturnedFromMap
     }
 
+    /**
+     * Handler para botao "Guardar": cria Identification com todos dados e insere na BD.
+     * Regressa ao menu principal apos sucesso.
+     * @param view O botao clicado.
+     */
     fun onSaveClick(view: View?) {
         lifecycleScope.launch {
             val ident = Identification(
@@ -153,6 +179,10 @@ class SaveIdentification : AppCompatActivity() {
         }
     }
 
+    /**
+     * Handler para botao "Tirar foto": abre camera para capturar foto.
+     * @param view O botao clicado.
+     */
     fun onClickTakePicture(view: View?) {
         try {
             val photoFile = createTmpImageFile()
@@ -164,11 +194,20 @@ class SaveIdentification : AppCompatActivity() {
         }
     }
 
+    /**
+     * Handler para botao "Carregar foto": abre galeria para selecionar imagem.
+     * @param view O botao clicado.
+     */
     fun onClickLoadPicture(view: View?) {
         selectPictureLauncher.launch(arrayOf("image/*"))
     }
 
     @Throws(IOException::class)
+    /**
+     * Cria ficheiro temporario para guardar a foto tirada pela camera.
+     * @return Ficheiro criado com nome unico (timestamp + ".jpg").
+     * @throws IOException Se erro ao criar ficheiro.
+     */
     private fun createTmpImageFile(): File {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -178,6 +217,10 @@ class SaveIdentification : AppCompatActivity() {
         return File.createTempFile("JPEG_${timeStamp}_", ".jpg", storageDir)
     }
 
+    /**
+     * Verifica se regressou do mapa com novas coordenadas.
+     * Se sim, atualiza latitude/longitude e habilita botao guardar.
+     */
     private fun checkNewCoordinates() {
         val extras = intent.extras ?: return
         if (extras.getInt("extra1") == 1) {
