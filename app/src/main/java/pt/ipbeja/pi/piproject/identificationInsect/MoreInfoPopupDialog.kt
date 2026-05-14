@@ -15,12 +15,19 @@ import java.io.IOException
 
 /**
  * Dialog to display more information about an identification option.
+ * Exibe descricao detalhada de uma opcao e a sua imagem associada.
+ * Permite clique na imagem para abrir zoom.
  * Created by Vicenzo on 01-02-18.
  */
 class MoreInfoPopupDialog(private val activity: Activity, private val option: KeyOption) : Dialog(activity) {
 
     private var close: Button? = null
 
+    /**
+     * Inicializa o dialogo: carrega dados da opcao (descricao e imagem),
+     * configura listeners para fechar e para abrir zoom da imagem.
+     * @param savedInstanceState Estado anterior do dialogo (se houver).
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
