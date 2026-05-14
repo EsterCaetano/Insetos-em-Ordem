@@ -1,151 +1,151 @@
-# Documentacao Tecnica do Codigo
+# Documentação Técnica do Código
 
 ## Objetivo
-Este documento descreve a organizacao principal do codigo da aplicacao **Insetos em Ordem** para facilitar manutencao, evolucao e onboarding.
+Este documento descreve a organização principal do código da aplicação **Insetos em Ordem** para facilitar manutenção, evolução e onboarding.
 
 ## Estrutura principal
 - `app/src/main/java/pt/ipbeja/pi/piproject/startUpApp/`
-  - Fluxo inicial da app (intro, menu principal, navegacao inicial).
+  - Fluxo inicial da app (intro, menu principal, navegação inicial).
 - `app/src/main/java/pt/ipbeja/pi/piproject/identificationInsect/`
-  - Fluxo de identificacao (questionario/chave, resultado, mapa, guardar identificacao).
+  - Fluxo de identificação (questionário/chave, resultado, mapa, guardar identificação).
 - `app/src/main/java/pt/ipbeja/pi/piproject/listSavedInsects/`
-  - Gestao de registos guardados (listar, corrigir ordem, apagar, enviar email, gerar PDF).
+  - Gestão de registos guardados (listar, corrigir ordem, apagar, enviar email, gerar PDF).
 - `app/src/main/java/pt/ipbeja/pi/piproject/persistence/`
-  - Persistencia com Room (`Identification`, `IdentificationDao`, `MyIdentificationsDb`).
+  - Persistência com Room (`Identification`, `IdentificationDao`, `MyIdentificationsDb`).
 - `app/src/main/java/pt/ipbeja/pi/piproject/idkey/`
-  - Modelos e logica da chave dicotomica (`IdentificationKey`, `QuestionNode`, `ResultNode`).
+  - Modelos e lógica da chave dicotómica (`IdentificationKey`, `QuestionNode`, `ResultNode`).
 - `app/src/main/assets/chave.xml`
-  - Definicao da chave dicotomica usada pela app.
+  - Definição da chave dicotómica usada pela app.
 
 ## Fluxos chave
-### 1) Identificacao de inseto
-1. Utilizador responde as perguntas da chave dicotomica.
+### 1) Identificação de inseto
+1. Utilizador responde as perguntas da chave dicotómica.
 2. App resolve o resultado (ordem/subordem/grupo).
 3. Utilizador pode guardar com foto, data e coordenadas.
 
 ### 2) Menu "Os meus insetos"
 1. App carrega registos da base de dados.
 2. Em cada registo, menu permite:
-   - ver mais informacao,
+   - ver mais informação,
    - corrigir ordem,
-   - enviar email com classificacao,
+   - enviar email com classificação,
    - gerar PDF,
    - apagar registo.
 
-### 3) Geracao de PDF
+### 3) Geração de PDF
 1. Filtra registos pela ordem selecionada.
 2. Escreve dados de taxonomia, coordenadas, data e descricao.
 3. Guarda PDF e abre pre-visualizacao na app.
 
-## Pontos de manutencao recomendados
-- Evitar logica de negocio extensa dentro de `Activity`; sempre que possivel, extrair para classes dedicadas.
-- Manter metodos pequenos e focados numa responsabilidade.
-- Documentar metodos com KDoc quando fazem I/O, persistencia ou transformacoes de dados.
+## Pontos de manutenção recomendados
+- Evitar lógica de negócio extensa dentro de `Activity`; sempre que possível, extrair para classes dedicadas.
+- Manter métodos pequenos e focados numa responsabilidade.
+- Documentar métodos com KDoc quando fazem I/O, persistência ou transformações de dados.
 - Centralizar mensagens fixas em `strings.xml`.
 
-## Ficheiros mais importantes para alteracoes futuras
+## Ficheiros mais importantes para alterações futuras
 - `app/src/main/java/pt/ipbeja/pi/piproject/listSavedInsects/MyIdentifications.kt`
 - `app/src/main/java/pt/ipbeja/pi/piproject/persistence/IdentificationDao.kt`
 - `app/src/main/java/pt/ipbeja/pi/piproject/idkey/IdentificationKey.kt`
 - `app/src/main/assets/chave.xml`
 
-## Convencoes sugeridas
-- Classes em PascalCase, metodos/variaveis em camelCase.
-- Comentarios curtos e orientados a intencao (evitar comentarios obvios).
-- Atualizar esta documentacao sempre que houver mudanca de fluxo funcional.
+## Convenções sugeridas
+- Classes em PascalCase, métodos/variáveis em camelCase.
+- Comentários curtos e orientados a intenção (evitar comentários óbvios).
+- Atualizar esta documentação sempre que houver mudança de fluxo funcional.
 
-## Documentacao por ficheiro (KDoc adicionado em 2026-05-14)
+## Documentação por ficheiro (KDoc adicionado em 2026-05-14)
 
-### Persistencia
-- `Identification.kt` — Entidade Room com dados de identificacao (ja tinha KDoc).
-- `IdentificationDao.kt` — DAO com metodos CRUD (ja tinha KDoc basico).
+### Persistência
+- `Identification.kt` — Entidade Room com dados de identificação (já tinha KDoc).
+- `IdentificationDao.kt` — DAO com métodos CRUD (já tinha KDoc básico).
 - `MyIdentificationsDb.kt` — Singleton Room database com `getDatabase()` documentado.
-- `Converters.kt` — TypeConverters para Date ↔ Long (ja tinha KDoc).
+- `Converters.kt` — TypeConverters para Date ↔ Long (já tinha KDoc).
 
-### Chave Dicotomica
-- `IdentificationKey.kt` — Singleton que carrega XML da chave; metodos privados de parse documentados:
+### Chave Dicotómica
+- `IdentificationKey.kt` — Singleton que carrega XML da chave; métodos privados de parse documentados:
   - `loadKey()` — Carrega ficheiro XML (PT ou EN).
   - `parseOption()` — Parse elemento 'option'.
   - `parseQuestion()` — Parse elemento 'node' (pergunta).
   - `parseResult()` — Parse elemento 'result' (ordem).
   - `loadXML()` — Carrega e parse completo do XML.
-- `QuestionNode.kt` — Modelo de pergunta (ja tinha descricao).
-- `ResultNode.kt` — Modelo de resultado/ordem (ja tinha descricao).
-- `KeyOption.kt` — Modelo de opcao (ja tinha descricao).
+- `QuestionNode.kt` — Modelo de pergunta (já tinha descrição).
+- `ResultNode.kt` — Modelo de resultado/ordem (já tinha descrição).
+- `KeyOption.kt` — Modelo de opção (já tinha descrição).
 
-### Fluxo de Identificacao
-- `Classificacao.kt` — Activity que guida utilizador pelas perguntas; metodos documentados:
+### Fluxo de Identificação
+- `Classificacao.kt` — Activity que guida utilizador pelas perguntas; métodos documentados:
   - `goToNextQuestion()` — Navega para pergunta/resultado.
-  - `onOptionAClick()` e `onOptionBClick()` — Handlers de opcoes.
+  - `onOptionAClick()` e `onOptionBClick()` — Handlers de opções.
   - `onImageAClick()` e `onImageBClick()` — Abre zoom de imagens.
   - `setImage()` — Carrega imagem dos assets.
-- `ShowResult.kt` — Exibe resultado da identificacao (revisar se necessario).
-  - `onCreate()` — Carrega resultado, exibe ordem, descricao e imagem.
+- `ShowResult.kt` — Exibe resultado da identificação (revisar se necessário).
+  - `onCreate()` — Carrega resultado, exibe ordem, descrição e imagem.
   - `onSaveQuitClick()` — Abre SaveIdentification para guardar registo.
   - `onQuitClick()` — Termina sem guardar.
   - `onActivityResult()` — Callback retornando de SaveIdentification.
-- `SaveIdentification.kt` — Guarda identificacao na BD (revisar se necessario).
-  - `onCreate()` — Inicializa Activity, verifica permissoes, carrega GPS.
-  - `checkLocationPermission()` — Verifica/pede permissão de localizacao.
-  - `updateLocation()` — Obtém localizacao atual via GPS.
-  - `updateSaveButtonState()` — Habilita botao guardar conforme criterios.
+- `SaveIdentification.kt` — Guarda identificação na BD (revisar se necessário).
+  - `onCreate()` — Inicializa Activity, verifica permissões, carrega GPS.
+  - `checkLocationPermission()` — Verifica/pede permissão de localização.
+  - `updateLocation()` — Obtém localização atual via GPS.
+  - `updateSaveButtonState()` — Habilita botão guardar conforme critérios.
   - `onSaveClick()` — Cria Identification e insere na BD.
-  - `onClickTakePicture()` — Abre camera para tirar foto.
+  - `onClickTakePicture()` — Abre câmara para tirar foto.
   - `onClickLoadPicture()` — Abre galeria para selecionar foto.
-  - `createTmpImageFile()` — Cria ficheiro temporario para foto.
+  - `createTmpImageFile()` — Cria ficheiro temporário para foto.
   - `checkNewCoordinates()` — Processa coordenadas do mapa.
-- `MapsActivity.kt` — Mapa de avistamentos (revisar se necessario).
-  - `onCreate()` — Inicializa mapa, verifica Google Play Services, configura botoes.
-  - `onMapReady()` — Configura mapa para modo singelo (selecao de localizacao) ou modo visualizacao.
-  - `onClickchangeView()` — Alterna entre vista de satelite e mapa normal.
+- `MapsActivity.kt` — Mapa de avistamentos (revisar se necessário).
+  - `onCreate()` — Inicializa mapa, verifica Google Play Services, configura botões.
+  - `onMapReady()` — Configura mapa para modo singelo (seleção de localização) ou modo visualização.
+  - `onClickchangeView()` — Alterna entre vista de satélite e mapa normal.
   - `onClickBack()` — Regressa a SaveIdentification.
-  - `loadAllIdentifications()` — Carrega todas as identificacoes como marcadores no mapa.
-- `ImageZoom.kt` — Zoom de imagem com PhotoView; metodo documentado:
+  - `loadAllIdentifications()` — Carrega todas as identificações como marcadores no mapa.
+- `ImageZoom.kt` — Zoom de imagem com PhotoView; método documentado:
   - `onCreate()` — Carrega imagem, configura PhotoView e listeners.
-- `MoreInfoPopupDialog.kt` — Dialog para mostrar mais informacao de uma opcao; metodos documentados:
-  - `onCreate()` — Carrega descricao e imagem da opcao, configura listeners para zoom.
+- `MoreInfoPopupDialog.kt` — Dialog para mostrar mais informação de uma opção; métodos documentados:
+  - `onCreate()` — Carrega descrição e imagem da opção, configura listeners para zoom.
 
-### Gestao de Registos ("Os meus insetos")
-- `MyIdentifications.kt` — Activity principal de lista; metodos documentados:
-  - `loadList()` — Carrega identificacoes da BD.
+### Gestão de Registos ("Os meus insetos")
+- `MyIdentifications.kt` — Activity principal de lista; métodos documentados:
+  - `loadList()` — Carrega identificações da BD.
   - `setListener()` — Registra cliques na lista.
   - `changeOrder()` — Permite corrigir ordem (agora com lista numerada).
   - `updateOrder()` — Guarda ordem corrigida.
-  - `showMoreInformation()` — Show descricao.
+  - `showMoreInformation()` — Show descrição.
   - `deleteItem()` — Apaga registo.
   - `sendEmailWithImageFromList()` — Prepara email com dados.
   - `resolveTaxonomy()` e `extractTaxonomyValue()` — Parse taxonomia.
   - `generatePdfForItem()` — Gera PDF com registos da mesma ordem.
-  - `drawMultilineText()` — Desenha texto multilinea no PDF.
+  - `drawMultilineText()` — Desenha texto multilinha no PDF.
   - `openGeneratedPdf()` — Abre preview do PDF.
-- `IdentificationAdapter.kt` — Adapter de lista; metodo documentado:
+- `IdentificationAdapter.kt` — Adapter de lista; método documentado:
   - `getView()` — Infla item com ordem, coordenadas, data e foto.
-- `PdfPreviewActivity.kt` — Preview do PDF (revisar se necessario).
-- `OrderPopupMenu.kt` — Menu popup de opcoes (revisar se necessario).
+- `PdfPreviewActivity.kt` — Preview do PDF (revisar se necessário).
+- `OrderPopupMenu.kt` — Menu popup de opções (revisar se necessário).
 
-### Utilidades
-- `Util.kt` — Utilitarios de texto; metodo documentado:
-  - `removeSpaces()` — Remove espacos multiplos e normalizacoes.
-- `Coordinates.kt` — Conversao de coordenadas; metodos ja documentados:
-  - `angleDMS()` — Converte angulo para graus/minutos/segundos.
-  - `anglesToDMS()` — Converte par (lat, lng) para formato legivel.
+### Utilitários
+- `Util.kt` — Utilitários de texto; método documentado:
+  - `removeSpaces()` — Remove espaços múltiplos e normalizações.
+- `Coordinates.kt` — Conversão de coordenadas; métodos já documentados:
+  - `angleDMS()` — Converte ângulo para graus/minutos/segundos.
+  - `anglesToDMS()` — Converte par (lat, lng) para formato legível.
 
 ### Menu Inicial  
-- `MainActivity.kt` — Menu principal (revisar se necessario).
-- `IntroActivity.kt` — Ecrã de intro (revisar se necessario).
+- `MainActivity.kt` — Menu principal (revisar se necessário).
+- `IntroActivity.kt` — Ecrã de intro (revisar se necessário).
 - `ScreenItem.kt` — Modelo de slide.
 - `IntroViewPagerAdapter.kt` — Adapter de ViewPager para intro.
 
-### Creditos
-- `Credits.kt` — Activity de creditos (revisar se necessario).
-- Varias imagens de outras instituicoes (IPBejaImageZoom, Ce3cImageZoom, etc.)
-- `PrivacyPolicyInfo.kt` — Politica de privacidade.
+### Créditos
+- `Credits.kt` — Activity de créditos (revisar se necessário).
+- Várias imagens de outras instituições (IPBejaImageZoom, Ce3cImageZoom, etc.)
+- `PrivacyPolicyInfo.kt` — Política de privacidade.
 
-## Status de documentacao completa (2026-05-14)
+## Status de documentação completa (2026-05-15)
 
 ### Classes documentadas com KDoc em português (19 classes + DOCUMENTACAO_TECNICA.md)
 
-✅ **Fluxo de identificacao (6 classes):**
+✅ **Fluxo de identificação (6 classes):**
   - Classificacao.kt — Guia do questionário
   - ShowResult.kt — Exibe resultado final
   - SaveIdentification.kt — Guarda identificação completa
@@ -162,7 +162,7 @@ Este documento descreve a organizacao principal do codigo da aplicacao **Insetos
   - MainActivity.kt — Menu principal
   - Credits.kt — Página de créditos
 
-✅ **Chave dicotomica e persistencia (4 classes):**
+✅ **Chave dicotómica e persistência (4 classes):**
   - IdentificationKey.kt — Parse XML da chave
   - MyIdentificationsDb.kt — Singleton Room database
   - Util.kt — Utilitários de texto
@@ -183,9 +183,9 @@ Este documento descreve a organizacao principal do codigo da aplicacao **Insetos
 **Total: 34 ficheiros .kt. Documentação concluída: 57% (19/34 com KDoc português)**
 
 ### Estratégia de documentação completa
-Foram documentadas todas as classes mais critícas de fluxo funcional em KDoc português. 
+Foram documentadas todas as classes mais críticas de fluxo funcional em KDoc português. 
 As classes restantes são:
-- UI auxiliares (IntroActivity, Privacy, etc.) — documentação simples necessaria
+- UI auxiliares (IntroActivity, Privacy, etc.) — documentação simples necessária
 - ImageZoom/Info instituições — reutilizarem template simples
 - Adapters secundários — documentação no código existente
 
