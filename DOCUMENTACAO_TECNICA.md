@@ -80,14 +80,28 @@ Este documento descreve a organizacao principal do codigo da aplicacao **Insetos
   - `onImageAClick()` e `onImageBClick()` — Abre zoom de imagens.
   - `setImage()` — Carrega imagem dos assets.
 - `ShowResult.kt` — Exibe resultado da identificacao (revisar se necessario).
+  - `onCreate()` — Carrega resultado, exibe ordem, descricao e imagem.
+  - `onSaveQuitClick()` — Abre SaveIdentification para guardar registo.
+  - `onQuitClick()` — Termina sem guardar.
+  - `onActivityResult()` — Callback retornando de SaveIdentification.
 - `SaveIdentification.kt` — Guarda identificacao na BD (revisar se necessario).
+  - `onCreate()` — Inicializa Activity, verifica permissoes, carrega GPS.
+  - `checkLocationPermission()` — Verifica/pede permissão de localizacao.
+  - `updateLocation()` — Obtém localizacao atual via GPS.
+  - `updateSaveButtonState()` — Habilita botao guardar conforme criterios.
+  - `onSaveClick()` — Cria Identification e insere na BD.
+  - `onClickTakePicture()` — Abre camera para tirar foto.
+  - `onClickLoadPicture()` — Abre galeria para selecionar foto.
+  - `createTmpImageFile()` — Cria ficheiro temporario para foto.
+  - `checkNewCoordinates()` — Processa coordenadas do mapa.
 - `MapsActivity.kt` — Mapa de avistamentos (revisar se necessario).
   - `onCreate()` — Inicializa mapa, verifica Google Play Services, configura botoes.
   - `onMapReady()` — Configura mapa para modo singelo (selecao de localizacao) ou modo visualizacao.
   - `onClickchangeView()` — Alterna entre vista de satelite e mapa normal.
   - `onClickBack()` — Regressa a SaveIdentification.
   - `loadAllIdentifications()` — Carrega todas as identificacoes como marcadores no mapa.
-- `ImageZoom.kt` — Preview de imagem.
+- `ImageZoom.kt` — Zoom de imagem com PhotoView; metodo documentado:
+  - `onCreate()` — Carrega imagem, configura PhotoView e listeners.
 - `MoreInfoPopupDialog.kt` — Dialog para mostrar mais informacao de uma opcao; metodos documentados:
   - `onCreate()` — Carrega descricao e imagem da opcao, configura listeners para zoom.
 
